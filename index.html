@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Choir Songbook</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/" id="brand">Choir Songbook</a>
+    <nav class="tabs" aria-label="Main">
+      <a href="#/" data-tab="services">Services</a>
+      <a href="#/songs" data-tab="songs">Songs</a>
+      <button type="button" id="reqBtn" class="tablink">Request</button>
+    </nav>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+  <div id="modal" hidden></div>
+  <noscript><p style="padding:16px">This songbook needs JavaScript turned on.</p></noscript>
+
+  <script src="data.js"></script>
+  <script src="transpose.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
