@@ -45,7 +45,7 @@
     if (rest === '' || rest === 'M' || /^(maj|major)$/i.test(rest)) minor = false;
     else if (/^(m|min|minor|-)$/i.test(rest)) minor = true;
     else return null;
-    return { root: NOTE[name], minor: minor };
+    return { root: NOTE[name], minor: minor, acc: m[2] };
   }
 
   var CHORD_RE = /^([A-G][#b]?)([^\/\s]*)(?:\/([A-G][#b]?))?$/;
@@ -92,11 +92,13 @@
       return { hasKey: false, shift: t, flats: false, capo: 0, capoDown: 0, easy: null, easyInvalid: false };
     }
     var soundRoot = mod(orig.root + t, 12);
-    var soundFlats = prefersFlats(soundRoot, orig.minor);
+    // Keep the spelling the song's key was written with (G# stays G#, not Ab) while it is in its own key.
+    var origFlats = orig.acc ? orig.acc === 'b' : prefersFlats(orig.root, orig.minor);
+    var soundFlats = soundRoot === orig.root ? origFlats : prefersFlats(soundRoot, orig.minor);
     var res = {
       hasKey: true,
       minor: orig.minor,
-      origName: keyLabel(orig.root, orig.minor, prefersFlats(orig.root, orig.minor)),
+      origName: keyLabel(orig.root, orig.minor, origFlats),
       soundingName: keyLabel(soundRoot, orig.minor, soundFlats),
       shift: t,
       flats: soundFlats,
